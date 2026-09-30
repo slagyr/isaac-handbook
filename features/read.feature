@@ -13,20 +13,10 @@ Feature: handbook__read — Isaac's operating handbook (isaac-z90t)
 
   Background:
     Given default Grover setup
-    And the isaac file "/tmp/modules/marigold.charts/deps.edn" exists with:
-      """
-      {:paths ["src" "resources"]}
-      """
-    And the isaac file "/tmp/modules/marigold.charts/src/marigold/charts.clj" exists with:
-      """
-      (ns marigold.charts)
-      (defn create-module [_opts] {})
-      """
     And the isaac file "/tmp/modules/marigold.charts/resources/isaac-manifest.edn" exists with:
       """
       {:id          :marigold.charts
        :version     "0.1.0"
-       :factory     marigold.charts/create-module
        :description "The chart room: navigation references for the reaches Marigold has already mapped."
        :handbook    "marigold/charts/handbook.md"}
       """
@@ -47,15 +37,10 @@ Feature: handbook__read — Isaac's operating handbook (isaac-z90t)
       Sensor sweep returns empty — the sweep interval hasn't elapsed yet;
       wait one cycle.
       """
-    And the isaac file "/tmp/modules/marigold.bridge/deps.edn" exists with:
-      """
-      {:paths ["resources"]}
-      """
     And the isaac file "/tmp/modules/marigold.bridge/resources/isaac-manifest.edn" exists with:
       """
       {:id          :marigold.bridge
        :version     "1.0.0"
-       :factory     marigold.bridge/create-module
        :description "The ship's bridge: where channels are declared."}
       """
     And the isaac EDN file "config/crew/cordelia.edn" exists with:
@@ -126,15 +111,10 @@ Feature: handbook__read — Isaac's operating handbook (isaac-z90t)
 
   @wip
   Scenario: multiple topics come back in the order asked
-    Given the isaac file "/tmp/modules/marigold.longwave/deps.edn" exists with:
-      """
-      {:paths ["resources"]}
-      """
-    And the isaac file "/tmp/modules/marigold.longwave/resources/isaac-manifest.edn" exists with:
+    Given the isaac file "/tmp/modules/marigold.longwave/resources/isaac-manifest.edn" exists with:
       """
       {:id          :marigold.longwave
        :version     "0.1.0"
-       :factory     marigold.longwave/create-module
        :description "Long-wave radio for the far reaches."
        :handbook    "marigold/longwave/handbook.md"}
       """
@@ -143,7 +123,7 @@ Feature: handbook__read — Isaac's operating handbook (isaac-z90t)
       ## Purpose
       Talk to ships beyond the horizon.
       """
-    When the isaac EDN file "isaac.edn" changes to:
+    And config file "isaac.edn" containing:
       """
       {:defaults {:frequencies {:crew "cordelia"}}
        :modules  {:marigold.charts   {:local/root "/tmp/modules/marigold.charts"}
