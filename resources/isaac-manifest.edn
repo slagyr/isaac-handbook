@@ -1,0 +1,15 @@
+{:id          :isaac.handbook
+ :version     "0.1.0"
+ :builtin?    true
+ :factory     isaac.handbook.module/create-module
+ :description "Isaac's operating handbook (POH) — tools for a crew to read how this instance of Isaac operates, drawn from every installed module's own handbook chapter."
+
+ :isaac.agent/tools
+ {:handbook__read {:factory isaac.handbook.tools/read-tool-factory}}
+
+ :isaac.config/schema
+ {:handbook {:schema {:name        :handbook
+                       :type        :map
+                       :description "Isaac's operating handbook settings."
+                       :schema      {:max-chars {:type        :int
+                                                 :description "Total response size cap for handbook__read, in characters. Default 40000."}}}}}}

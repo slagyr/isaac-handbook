@@ -55,7 +55,6 @@ Feature: handbook__read — Isaac's operating handbook (isaac-z90t)
                   :marigold.bridge {:local/root "/tmp/modules/marigold.bridge"}}}
       """
 
-  @wip
   Scenario: no topics returns a table of contents; a module with no handbook contributes nothing
     Given the following model responses are queued:
       | type     | tool_call     | arguments | content                    | model |
@@ -73,7 +72,6 @@ Feature: handbook__read — Isaac's operating handbook (isaac-z90t)
       | type       | message.content        |
       | toolResult | #"(?s)marigold\.bridge" |
 
-  @wip
   Scenario: a whole-chapter topic returns its markdown, naming its module
     Given the following model responses are queued:
       | type     | tool_call      | arguments                          | content       | model |
@@ -90,7 +88,6 @@ Feature: handbook__read — Isaac's operating handbook (isaac-z90t)
       | message | toolResult   | #"(?s)Sensor sweep returns empty"           |
       | message | assistant    | Got the chart room.                         |
 
-  @wip
   Scenario: a chapter-section topic returns just that section, with its Troubleshooting
     Given the following model responses are queued:
       | type     | tool_call      | arguments                                                  | content    | model |
@@ -109,7 +106,6 @@ Feature: handbook__read — Isaac's operating handbook (isaac-z90t)
       | type       | message.content            |
       | toolResult | #"(?s)Reading the sensors" |
 
-  @wip
   Scenario: multiple topics come back in the order asked
     Given the isaac file "/tmp/modules/marigold.longwave/resources/isaac-manifest.edn" exists with:
       """
@@ -142,7 +138,6 @@ Feature: handbook__read — Isaac's operating handbook (isaac-z90t)
       | message | toolResult   | #"(?s)marigold\.longwave.*Talk to ships beyond the horizon.*marigold\.charts.*Reading the sensors" |
       | message | assistant    | Both.                                                                                     |
 
-  @wip
   Scenario: an unknown topic is listed as unknown; the call still succeeds
     Given the following model responses are queued:
       | type     | tool_call      | arguments                                                        | content        | model |
@@ -158,7 +153,6 @@ Feature: handbook__read — Isaac's operating handbook (isaac-z90t)
       | message | toolResult   | #"(?s)no topics"                                           |
       | message | assistant    | No such thing.                                             |
 
-  @wip
   Scenario: the response is capped; omitted topics are listed by name
     Given the isaac config path "handbook.max-chars" is "60"
     And the following model responses are queued:
@@ -173,7 +167,6 @@ Feature: handbook__read — Isaac's operating handbook (isaac-z90t)
       | message | toolResult   | #"(?s)omitted"              |
       | message | assistant    | Trimmed a lot.              |
 
-  @wip
   Scenario: handbook__read is unavailable unless the crew is granted it
     Given the crew "cordelia" allows tools: fs/read
     When the user sends "hello" on session "bistro-chat" as crew "cordelia"

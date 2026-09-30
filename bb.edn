@@ -1,0 +1,4 @@
+{:tasks
+ {spec     {:task (shell "clojure" "-M:spec")}
+  features {:task (apply shell "clojure" "-M:features" *command-line-args*)}
+  ci       {:task (do (run 'spec) (run 'features))}}}
