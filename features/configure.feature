@@ -45,7 +45,7 @@ Feature: handbook__configure — atomic multi-set config writes, prose fields (i
   Scenario: a single field set lands in the crew's own entity file
     Given the isaac EDN file "config/crew/marvin.edn" exists with:
       | path  | value  |
-      | model | grover |
+      | model | :grover |
     And the following model responses are queued:
       | type     | tool_call            | arguments                             | content        | model |
       | toolCall | handbook__configure  | {"set":{"crew.marvin.model":"echo"}}  |                | echo  |
@@ -75,16 +75,16 @@ Feature: handbook__configure — atomic multi-set config writes, prose fields (i
       | message | toolResult   | #"(?s)models\.riptide\.model.*echo-v1"   |
       | message | toolResult   | #"(?s)models\.riptide\.provider.*grover" |
       | message | assistant    | Riptide's up.                              |
-    And the isaac file "isaac.edn" EDN contains:
-      | path                     | value   |
-      | models.riptide.model     | echo-v1 |
-      | models.riptide.provider  | grover  |
+    And the isaac file "config/models/riptide.edn" EDN contains:
+      | path     | value   |
+      | model    | echo-v1 |
+      | provider | grover  |
 
   @wip
   Scenario: an invalid pair in the batch refuses the whole call; nothing is written
     Given the isaac EDN file "config/crew/marvin.edn" exists with:
       | path  | value  |
-      | model | grover |
+      | model | :grover |
     And the following model responses are queued:
       | type     | tool_call           | arguments                                                          | content  | model |
       | toolCall | handbook__configure | {"set":{"crew.marvin.model":"echo","crew.marvin.effort":"a lot"}}  |          | echo  |
@@ -98,7 +98,7 @@ Feature: handbook__configure — atomic multi-set config writes, prose fields (i
       | message | assistant    | Refused.                       |
     And the isaac file "config/crew/marvin.edn" EDN contains:
       | path  | value  |
-      | model | grover |
+      | model | :grover |
 
   @wip
   Scenario: unset removes a field through the same tool
@@ -118,11 +118,11 @@ Feature: handbook__configure — atomic multi-set config writes, prose fields (i
       | message | assistant    | Cleared.                             |
     And the isaac file "config/crew/marvin.edn" EDN contains:
       | path  | value  |
-      | model | grover |
+      | model | :grover |
     And the config file "crew/marvin.edn" does not contain "Worry"
 
   @wip
-  Scenario: creating a new cron job follows the sibling-file precedent and splits the prompt into a companion file
+  Scenario: creating a new cron job follows the entity-file preference and splits the prompt into a companion file
     Given the following model responses are queued:
       | type     | tool_call           | arguments                                                                                                                                     | content       | model |
       | toolCall | handbook__configure | {"set":{"cron.hull-watch":{"crew":"cordelia","expr":"0 6 * * *","prompt":"Log the hull integrity reading and flag anything that rattles."}}} |               | echo  |
@@ -143,7 +143,7 @@ Feature: handbook__configure — atomic multi-set config writes, prose fields (i
     And the config file "isaac.edn" does not contain "hull-watch"
 
   @wip
-  Scenario: creating a new crew follows the sibling-file precedent, landing with a companion soul
+  Scenario: creating a new crew follows the entity-file preference, landing with a companion soul
     Given the following model responses are queued:
       | type     | tool_call           | arguments                                                                                                 | content   | model |
       | toolCall | handbook__configure | {"set":{"crew.boatswain":{"model":"echo","soul":"You keep the deck crew in line and the log current."}}} |           | echo  |
@@ -173,7 +173,7 @@ Feature: handbook__configure — atomic multi-set config writes, prose fields (i
   Scenario: the response names every file the batch touched, not just the last one
     Given the isaac EDN file "config/crew/marvin.edn" exists with:
       | path  | value  |
-      | model | grover |
+      | model | :grover |
     And the following model responses are queued:
       | type     | tool_call           | arguments                                                            | content       | model |
       | toolCall | handbook__configure | {"set":{"crew.marvin.model":"echo","defaults.tools.max-lines":500}} |               | echo  |
@@ -190,7 +190,7 @@ Feature: handbook__configure — atomic multi-set config writes, prose fields (i
   Scenario: every configure call is logged with who, what, and the outcome
     Given the isaac EDN file "config/crew/marvin.edn" exists with:
       | path  | value  |
-      | model | grover |
+      | model | :grover |
     And the following model responses are queued:
       | type     | tool_call           | arguments                             | content | model |
       | toolCall | handbook__configure | {"set":{"crew.marvin.model":"echo"}}  |         | echo  |
@@ -224,7 +224,7 @@ Feature: handbook__configure — atomic multi-set config writes, prose fields (i
   Scenario: an unrecognized config path refuses the whole call
     Given the isaac EDN file "config/crew/marvin.edn" exists with:
       | path  | value  |
-      | model | grover |
+      | model | :grover |
     And the following model responses are queued:
       | type     | tool_call           | arguments                                                      | content  | model |
       | toolCall | handbook__configure | {"set":{"crew.marvin.model":"echo","crew.marvin.bogus":"x"}}  |          | echo  |
@@ -238,13 +238,13 @@ Feature: handbook__configure — atomic multi-set config writes, prose fields (i
       | message | assistant    | Refused.                       |
     And the isaac file "config/crew/marvin.edn" EDN contains:
       | path  | value  |
-      | model | grover |
+      | model | :grover |
 
   @wip
   Scenario: unsetting a whole entity path removes its file
     Given the isaac EDN file "config/crew/marvin.edn" exists with:
       | path  | value  |
-      | model | grover |
+      | model | :grover |
     And the following model responses are queued:
       | type     | tool_call           | arguments                  | content       | model |
       | toolCall | handbook__configure | {"unset":["crew.marvin"]}  |               | echo  |
