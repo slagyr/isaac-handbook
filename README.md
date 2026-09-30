@@ -35,8 +35,7 @@ the same tool, is coming — isaac-lshz).
   lists the rest as omitted by name.
 - Reference topics — one per crew, module, comm, cron job, and hail band, plus
   one per config path with its current effective value — are drafted
-  (`features/reference.feature`, `@wip`) but not yet built; they depend on
-  isaac-dnib's effective-config work.
+  (`features/reference.feature`, `@wip`) but not yet built (isaac-niqx).
 
 ## How a module ships a chapter
 
