@@ -1,7 +1,7 @@
 {:paths ["src" "resources" "spec"]
 
  :deps {io.github.slagyr/isaac-foundation-test-support {:git/url "https://github.com/slagyr/isaac-foundation.git"
-                                                        :git/sha "fd91dd101ff41ed5ea85d1b245536a9b0bb7afb9"
+                                                        :git/sha "06d58b75bc52b3e118dc8e81569096de2532a0d4"
                                                         :deps/root "spec-support"}}
 
  :tasks

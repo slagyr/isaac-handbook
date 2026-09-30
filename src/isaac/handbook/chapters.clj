@@ -3,14 +3,14 @@
    foundation's own chapter leads the table of contents by explicit rule
    (isaac-z90t Decisions), every other module follows sorted by module id.
    Reads each module's :handbook classpath resource through foundation's
-   published module coordinate helpers (isaac.module.coords) — the same
-   coordinate isaac.module.discovery/handbook-resolves? already validates
+   published module coordinate helpers (isaac.foundation.module.coords) — the same
+   coordinate isaac.foundation.module.discovery/handbook-resolves? already validates
    at config load — rather than re-walking manifest/classpath discovery."
   (:require
     [clojure.edn :as edn]
     [clojure.java.io :as io]
-    [isaac.module.berths :as berths]
-    [isaac.module.coords :as coords]))
+    [isaac.foundation.module.berths :as berths]
+    [isaac.foundation.module.coords :as coords]))
 
 (defn- module-deps-paths
   "The classpath-relative roots a module's own deps.edn declares

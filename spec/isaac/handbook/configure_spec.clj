@@ -1,10 +1,10 @@
 (ns isaac.handbook.configure-spec
   (:require
     [speclj.core :refer :all]
-    [isaac.config.loader :as loader]
-    [isaac.config.mutate :as mutate]
+    [isaac.foundation.config.loader :as loader]
+    [isaac.foundation.config.mutate :as mutate]
     [isaac.handbook.configure :as configure]
-    [isaac.logger :as log]))
+    [isaac.foundation.logger :as log]))
 
 (defn- stub-load [config]
   (fn [_] {:config config :errors [] :warnings []}))

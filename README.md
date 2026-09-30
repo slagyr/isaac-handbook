@@ -38,7 +38,7 @@ tools: `handbook__read` (read the handbook) and `handbook__configure`
   (`features/reference.feature`, `@wip`) but not yet built (isaac-niqx).
 - Crew tool `handbook__configure` — granted separately from `handbook__read`,
   via `:tools :allow [:handbook/configure]`. Writes config through
-  foundation's single write path (`isaac.config.mutate/set-many!`), the same
+  foundation's single write path (`isaac.foundation.config.mutate/set-many!`), the same
   validate/write/hot-reload machinery `isaac config set`/`unset` use — never
   a second writer, never `--force`. A call carries `set` (a map of dotted
   config path -> value) and/or `unset` (a list of dotted config paths); every

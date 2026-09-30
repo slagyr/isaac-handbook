@@ -1,7 +1,7 @@
 (ns isaac.handbook.tools-spec
   (:require
     [speclj.core :refer :all]
-    [isaac.config.loader :as loader]
+    [isaac.foundation.config.loader :as loader]
     [isaac.handbook.tools :as tools]))
 
 (describe "isaac.handbook.tools"

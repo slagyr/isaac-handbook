@@ -1,22 +1,22 @@
 (ns isaac.handbook.configure
   "Crew tool :handbook/configure (wire handbook__configure) — several
    path/value set/unset pairs applied atomically through foundation's
-   isaac.config.mutate/set-many! (isaac-cvri), the same write path
+   isaac.foundation.config.mutate/set-many! (isaac-cvri), the same write path
    `isaac config set`/`unset` use (validate, write, hot-reload; never
    writes defaults; no --force). Companion prose fields (a cron job's
    :prompt, a crew's soul) and brand-new entities ride the same call
    through set-many!'s existing plan/merge machinery — no tool-specific
-   placement logic here; a new entity lands per isaac.config.mutate's own
+   placement logic here; a new entity lands per isaac.foundation.config.mutate's own
    precedent (isaac-c4em). Refuses a literal write over a path whose
    current value is a `${VAR}` reference. Every call is logged as
    :handbook/configure with the calling crew, session, the requested
    pairs (secrets redacted), and the outcome."
   (:require
     [clojure.string :as str]
-    [isaac.config.loader :as loader]
-    [isaac.config.mutate :as mutate]
-    [isaac.config.paths :as paths]
-    [isaac.logger :as log]))
+    [isaac.foundation.config.loader :as loader]
+    [isaac.foundation.config.mutate :as mutate]
+    [isaac.foundation.config.paths :as paths]
+    [isaac.foundation.logger :as log]))
 
 (def ^:private secret-ref-pattern #"\$\{[^}]+\}")
 
@@ -48,9 +48,9 @@
 ;; schema itself all key off keywords). Recursively keywordize map keys so a
 ;; whole-entity `set` (crew.boatswain = {"model": "echo", "soul": "..."})
 ;; lands the way `isaac config set`'s own stdin-map form would. Leaf scalar
-;; values are written exactly as given — same as `isaac.config.mutate` itself,
+;; values are written exactly as given — same as `isaac.foundation.config.mutate` itself,
 ;; which never coerces a value's type; only the CLI's own single-path `set`
-;; does that (isaac.config.cli.mutate-common), and handbook__configure has no
+;; does that (isaac.foundation.config.cli.mutate-common), and handbook__configure has no
 ;; single-path CLI-style entry point to mirror it through.
 (defn- keywordize-keys [v]
   (cond

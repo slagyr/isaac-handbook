@@ -87,7 +87,7 @@ to be missing and confirm it's reported unknown rather than erroring.
 ## Changing config
 
 **What it is.** `handbook__configure` writes Isaac config through
-foundation's single write path (`isaac.config.mutate/set-many!`) — the
+foundation's single write path (`isaac.foundation.config.mutate/set-many!`) — the
 same validate/write/hot-reload machinery `isaac config set`/`unset` use.
 It never writes a default value on your behalf and it never bypasses
 validation; there is no `--force` from inside a turn.

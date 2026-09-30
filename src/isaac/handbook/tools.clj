@@ -2,8 +2,8 @@
   "Crew tool :handbook/read (wire handbook__read)."
   (:require
     [clojure.string :as str]
-    [isaac.cli.host :as host]
-    [isaac.config.loader :as loader]
+    [isaac.foundation.cli.host :as host]
+    [isaac.foundation.config.loader :as loader]
     [isaac.handbook.chapters :as chapters]
     [isaac.handbook.render :as render]))
 
