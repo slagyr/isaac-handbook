@@ -11,6 +11,10 @@
   {:module-id "marigold.longwave"
    :text      "## Purpose\nTalk to ships beyond the horizon.\n"})
 
+(def commented-chapter
+  {:module-id "marigold.bridge"
+   :text      "<!--\nLint convention: internal authoring note, not for a crew.\n-->\n\n## Hailing\nOpen a channel to another ship.\n"})
+
 (describe "isaac.handbook.render"
 
   (describe "table of contents (no topics)"
@@ -77,4 +81,16 @@
 
     (it "always keeps at least the first item, even alone over cap"
       (let [out (render/read-topics [charts-chapter] ["marigold.charts"] 1)]
-        (should-contain "Plotting a course" out)))))
+        (should-contain "Plotting a course" out))))
+
+  (describe "HTML comments in chapter source"
+    (it "are stripped from a whole-chapter topic before a crew ever sees them"
+      (let [out (render/read-topics [commented-chapter] ["marigold.bridge"] nil)]
+        (should-contain "Hailing" out)
+        (should-not-contain "Lint convention" out)
+        (should-not-contain "<!--" out)))
+
+    (it "are stripped from the table of contents"
+      (let [toc (render/read-topics [commented-chapter] [] nil)]
+        (should-not-contain "Lint convention" toc)
+        (should-not-contain "<!--" toc)))))

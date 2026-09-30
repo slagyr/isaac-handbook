@@ -54,10 +54,10 @@ tools: `handbook__read` (read the handbook) and `handbook__configure`
 
 ## How a module ships a chapter
 
-A module adds a top-level `:handbook` key to its `isaac-manifest.edn`, naming
-a classpath-relative markdown file (for example `:handbook
-"isaac/foundation/handbook.md"`, alongside `resources/isaac/foundation/handbook.md`).
-The chapter is free-form markdown: `##` headings become the module's
+A module's chapter lives at `resources/isaac/<pkg>/handbook.md`, and the
+module's `isaac-manifest.edn` adds a top-level `:handbook` key naming that
+classpath path (for example `:handbook "isaac/foundation/handbook.md"` for
+`resources/isaac/foundation/handbook.md`). The chapter is free-form markdown: `##` headings become the module's
 addressable sections (`<module-id>#<slug>`); a nested `### Troubleshooting`
 under a concept is the house convention, not a requirement enforced by this
 module. A module with no `:handbook` key just contributes nothing to the

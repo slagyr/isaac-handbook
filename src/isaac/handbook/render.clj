@@ -20,10 +20,21 @@
   {:id      (str module-id "#" slug)
    :content (str "## " module-id "#" slug " — " title "\n\n" body)})
 
+(defn- strip-html-comments
+  "Drops every `<!-- ... -->` block (including multiline ones, such as a
+   lint-convention authoring note left at the top of a chapter) before the
+   text is ever assembled into a table-of-contents entry or topic response
+   — a stray authoring comment must never reach a crew."
+  [text]
+  (-> text
+      (str/replace #"(?s)<!--.*?-->\n*" "")
+      str/triml))
+
 (defn- chapter-entry [{:keys [module-id text]}]
-  {:module-id module-id
-   :text      text
-   :sections  (sections/sections text)})
+  (let [text (strip-html-comments text)]
+    {:module-id module-id
+     :text      text
+     :sections  (sections/sections text)}))
 
 (defn- topic-entries
   "Every chapter's own entries, sections attached."

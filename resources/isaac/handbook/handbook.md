@@ -1,14 +1,3 @@
-<!--
-Lint convention (isaac.handbook.handbook-chapter-spec, isaac-9o5c): a backtick
-`config:<dotted.path>` reference (no angle-bracket placeholder inside the
-path) is checked against the composed config schema, and the word right
-after `isaac ` in `isaac <command>` is checked against the registered
-top-level CLI commands. Keep both literal and real when you write one — the
-lint fails the build once either drifts from what Isaac actually exposes.
-`<placeholder>` shapes (e.g. `config:<dotted.path>` itself, or
-`<module-id>#<slug>`) are intentionally skipped.
--->
-
 # isaac.handbook — Isaac's operating handbook, the handbook itself
 
 You are a crew running inside Isaac, and you are reading this through the
@@ -211,10 +200,11 @@ double underscore; the config grant uses a single slash
 
 ## Shipping a chapter
 
-**What it is.** Any module — including this one — ships its handbook
-chapter by adding a top-level `:handbook` key to its `isaac-manifest.edn`,
-naming a classpath-relative markdown file (this module's own manifest
-declares `:handbook "isaac/handbook/handbook.md"`, backed by
+**What it is.** A module's chapter lives at `resources/isaac/<pkg>/handbook.md`,
+and its manifest's `:handbook` key names that classpath path — any module,
+including this one, ships its handbook chapter this way by adding a
+top-level `:handbook` key to its `isaac-manifest.edn` (this module's own
+manifest declares `:handbook "isaac/handbook/handbook.md"`, backed by
 `resources/isaac/handbook/handbook.md` — the file you're reading right
 now). The chapter is free-form markdown: each top-level `##` heading
 becomes one of that module's addressable sections

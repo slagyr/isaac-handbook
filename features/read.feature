@@ -173,3 +173,35 @@ Feature: handbook__read — Isaac's operating handbook (isaac-z90t)
     Then the prompt does not have tools:
       | name           |
       | handbook__read |
+
+  Scenario: an HTML comment in chapter source never reaches a crew
+    Given the isaac file "/tmp/modules/marigold.bridge/resources/isaac-manifest.edn" exists with:
+      """
+      {:id          :marigold.bridge
+       :version     "1.0.0"
+       :description "The ship's bridge: where channels are declared."
+       :handbook    "marigold/bridge/handbook.md"}
+      """
+    And the isaac file "/tmp/modules/marigold.bridge/resources/marigold/bridge/handbook.md" exists with:
+      """
+      <!--
+      Lint convention: internal authoring note, not for a crew.
+      -->
+
+      ## Hailing
+      Open a channel to another ship.
+      """
+    And the following model responses are queued:
+      | type     | tool_call      | arguments                       | content        | model |
+      | toolCall | handbook__read | {"topics":["marigold.bridge"]}  |                | echo  |
+      | text     |                |                                  | Channel's open. | echo  |
+    When isaac is run with "prompt -m 'Read the bridge chapter' --session bistro-chat --crew cordelia"
+    Then session "bistro-chat" has transcript matching:
+      | type    | message.role | message.content              |
+      | message | user         | Read the bridge chapter      |
+      | message | assistant    | #"(?s)handbook__read"        |
+      | message | toolResult   | #"(?s)Hailing"                |
+      | message | assistant    | Channel's open.               |
+    And session "bistro-chat" has transcript not matching:
+      | type       | message.content       |
+      | toolResult | #"(?s)Lint convention" |
