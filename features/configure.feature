@@ -11,19 +11,12 @@ Feature: handbook__configure — atomic multi-set config writes, prose fields (i
   writes a literal value over a `${VAR}`-referenced secret. Every call is
   logged.
 
-  Where a new entity lands (its own file vs inline in isaac.edn) is NOT a
-  handbook__configure-specific decision — it's `config set`'s own existing
-  placement precedent, unchanged: edit an existing entry where it already
-  lives; add an entry to a kind whose other entries are ALL entity files and
-  it becomes one too; else honor `prefer-entity-files`; else inline. No
-  per-call override. The Background below gives crew and cron a file-backed
-  sibling before scenarios 5/6 exercise the "new entry follows suit" case.
-
-  DRAFT — handbook__configure does not exist yet (isaac-lshz). Depends on
-  isaac-foundation's atomic multi-path write primitive AND its missing
-  "siblings are all files" placement rule (both isaac-lshz-prereq, not yet
-  built). Scenarios are @wip; a dry run against the current handbook module
-  is expected to fail at "unknown tool: handbook__configure".
+  Where a new entity lands is `config set`'s own placement precedent
+  (isaac-c4em): an existing entry is written where it already lives; a new
+  entry becomes its own entity file when `:prefer-entity-files` is true,
+  otherwise it goes inline in isaac.edn. The Background sets the preference,
+  as the live instances do. Batches go through foundation's `set-many!`
+  (isaac-cvri).
 
   Background:
     Given default Grover setup
@@ -44,7 +37,8 @@ Feature: handbook__configure — atomic multi-set config writes, prose fields (i
       | prompt | Wrap the day's log.  |
     And config file "isaac.edn" containing:
       """
-      {:defaults {:frequencies {:crew "cordelia"}}}
+      {:defaults            {:frequencies {:crew "cordelia"}}
+       :prefer-entity-files true}
       """
 
   @wip
