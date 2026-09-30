@@ -6,9 +6,9 @@ running instance it's inside actually operates, drawn from every installed
 module's own handbook chapter.
 
 Depends on [isaac-foundation](https://github.com/slagyr/isaac-foundation) and
-[isaac-agent](https://github.com/slagyr/isaac-agent). Contributes the
-`handbook__read` crew tool (`handbook__configure`, for changing config through
-the same tool, is coming — isaac-lshz).
+[isaac-agent](https://github.com/slagyr/isaac-agent). Contributes two crew
+tools: `handbook__read` (read the handbook) and `handbook__configure`
+(change config the same way `isaac config set`/`unset` would).
 
 [![Handbook](https://github.com/slagyr/isaac-handbook/actions/workflows/ci-tests.yml/badge.svg)](https://github.com/slagyr/isaac-handbook/actions/workflows/ci-tests.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -36,6 +36,21 @@ the same tool, is coming — isaac-lshz).
 - Reference topics — one per crew, module, comm, cron job, and hail band, plus
   one per config path with its current effective value — are drafted
   (`features/reference.feature`, `@wip`) but not yet built (isaac-niqx).
+- Crew tool `handbook__configure` — granted separately from `handbook__read`,
+  via `:tools :allow [:handbook/configure]`. Writes config through
+  foundation's single write path (`isaac.config.mutate/set-many!`), the same
+  validate/write/hot-reload machinery `isaac config set`/`unset` use — never
+  a second writer, never `--force`. A call carries `set` (a map of dotted
+  config path -> value) and/or `unset` (a list of dotted config paths); every
+  pair in one call is applied as ONE atomic batch, so an invalid pair refuses
+  the whole call and nothing is written, even the individually-valid pairs.
+  Companion prose fields (a cron job's `:prompt`, a crew's `:soul`) and
+  brand-new entities (a new crew, a new cron job) ride the same call — where
+  a new entity lands follows `config set`'s own placement precedent, with no
+  tool-specific override. The tool never reads or writes `.env` and refuses a
+  literal value over a path whose current value is a `${VAR}` reference (a
+  crew can repoint a secret at a different `${VAR}`, never overwrite it with
+  a literal). Every call is logged as `:handbook/configure`.
 
 ## How a module ships a chapter
 

@@ -41,7 +41,6 @@ Feature: handbook__configure — atomic multi-set config writes, prose fields (i
        :prefer-entity-files true}
       """
 
-  @wip
   Scenario: a single field set lands in the crew's own entity file
     Given the isaac EDN file "config/crew/marvin.edn" exists with:
       | path  | value  |
@@ -62,7 +61,6 @@ Feature: handbook__configure — atomic multi-set config writes, prose fields (i
       | path  | value |
       | model | echo  |
 
-  @wip
   Scenario: atomic multi-set writes two fields that are only valid together
     Given the following model responses are queued:
       | type     | tool_call           | arguments                                                                      | content       | model |
@@ -80,7 +78,6 @@ Feature: handbook__configure — atomic multi-set config writes, prose fields (i
       | model    | echo-v1 |
       | provider | grover  |
 
-  @wip
   Scenario: an invalid pair in the batch refuses the whole call; nothing is written
     Given the isaac EDN file "config/crew/marvin.edn" exists with:
       | path  | value  |
@@ -100,7 +97,6 @@ Feature: handbook__configure — atomic multi-set config writes, prose fields (i
       | path  | value  |
       | model | :grover |
 
-  @wip
   Scenario: unset removes a field through the same tool
     Given the isaac EDN file "config/crew/marvin.edn" exists with:
       | path  | value   |
@@ -121,7 +117,6 @@ Feature: handbook__configure — atomic multi-set config writes, prose fields (i
       | model | :grover |
     And the config file "crew/marvin.edn" does not contain "Worry"
 
-  @wip
   Scenario: creating a new cron job follows the entity-file preference and splits the prompt into a companion file
     Given the following model responses are queued:
       | type     | tool_call           | arguments                                                                                                                                     | content       | model |
@@ -142,7 +137,6 @@ Feature: handbook__configure — atomic multi-set config writes, prose fields (i
     And the isaac file "config/cron/hull-watch.md" exists
     And the config file "isaac.edn" does not contain "hull-watch"
 
-  @wip
   Scenario: creating a new crew follows the entity-file preference, landing with a companion soul
     Given the following model responses are queued:
       | type     | tool_call           | arguments                                                                                                 | content   | model |
@@ -161,7 +155,6 @@ Feature: handbook__configure — atomic multi-set config writes, prose fields (i
       | model | echo  |
     And the isaac file "config/crew/boatswain.md" exists
 
-  @wip
   Scenario: handbook__configure is unavailable unless the crew is granted it
     Given the crew "oscar" allows tools: handbook/read
     When the user sends "hello" on session "bistro-chat" as crew "oscar"
@@ -169,7 +162,6 @@ Feature: handbook__configure — atomic multi-set config writes, prose fields (i
       | name                |
       | handbook__configure |
 
-  @wip
   Scenario: the response names every file the batch touched, not just the last one
     Given the isaac EDN file "config/crew/marvin.edn" exists with:
       | path  | value  |
@@ -186,7 +178,6 @@ Feature: handbook__configure — atomic multi-set config writes, prose fields (i
       | message | toolResult   | #"(?s)defaults\.tools\.max-lines.*isaac\.edn"  |
       | message | assistant    | Logged both.                                     |
 
-  @wip
   Scenario: every configure call is logged with who, what, and the outcome
     Given the isaac EDN file "config/crew/marvin.edn" exists with:
       | path  | value  |
@@ -200,7 +191,6 @@ Feature: handbook__configure — atomic multi-set config writes, prose fields (i
       | level | event               | crew     | session     | outcome |
       | :info | :handbook/configure | cordelia | bistro-chat | written |
 
-  @wip
   Scenario: writing a literal value over a secret reference is refused
     Given the env var "GOOGLE_CLIENT_SECRET" is set to "sh-h-h-not-for-the-handbook"
     And the isaac config path "google.oauth.client-secret" is "${GOOGLE_CLIENT_SECRET}"
@@ -220,7 +210,6 @@ Feature: handbook__configure — atomic multi-set config writes, prose fields (i
       | toolResult | #"(?s)leaked-value-123" |
     And the config file "isaac.edn" does not contain "leaked-value-123"
 
-  @wip
   Scenario: an unrecognized config path refuses the whole call
     Given the isaac EDN file "config/crew/marvin.edn" exists with:
       | path  | value  |
@@ -240,7 +229,6 @@ Feature: handbook__configure — atomic multi-set config writes, prose fields (i
       | path  | value  |
       | model | :grover |
 
-  @wip
   Scenario: unsetting a whole entity path removes its file
     Given the isaac EDN file "config/crew/marvin.edn" exists with:
       | path  | value  |
