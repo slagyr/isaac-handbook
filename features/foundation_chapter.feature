@@ -30,7 +30,6 @@ Feature: Foundation's chapter introduces the handbook (isaac-3z1b)
        :modules  {:atlas.charts {:local/root "/tmp/modules/atlas.charts"}}}
       """
 
-  @wip
   Scenario: the table of contents leads with foundation's chapter
     Given the following model responses are queued:
       | type     | tool_call      | arguments | content          | model |
@@ -43,7 +42,6 @@ Feature: Foundation's chapter introduces the handbook (isaac-3z1b)
       | message | toolResult   | #"(?s)isaac\.foundation.*Vocabulary.*atlas\.charts" |
       | message | assistant    | Foundation first.                                |
 
-  @wip
   Scenario: a foundation section can be read by its topic id
     Given the following model responses are queued:
       | type     | tool_call      | arguments                                  | content    | model |
