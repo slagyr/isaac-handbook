@@ -17,7 +17,8 @@ Feature: handbook__read — generated reference (inventory + config) (isaac-niqx
       | path           | value            |
       | model          | echo             |
       | soul           | You are Cordelia |
-      | session-policy | episodes         |
+      | context-mode   | episodes         |
+      | observers      | [:episodes]      |
     And the isaac EDN file "config/crew/oscar.edn" exists with:
       | path  | value        |
       | model | echo         |
@@ -70,7 +71,7 @@ Feature: handbook__read — generated reference (inventory + config) (isaac-niqx
       """
 
   @wip
-  Scenario: an inventory entry lists a crew's model, granted tools, and session policy
+  Scenario: an inventory entry lists a crew's model, granted tools, and context mode
     Given the following model responses are queued:
       | type     | tool_call      | arguments                       | content   | model |
       | toolCall | handbook__read | {"topics":["crew:cordelia"]}    |           | echo  |
