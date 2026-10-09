@@ -121,16 +121,16 @@ Feature: handbook__read — generated reference (inventory + config) (isaac-niqx
   @wip
   Scenario: a secret config entry shows set/not-set, never the value
     Given the env var "GOOGLE_CLIENT_SECRET" is set to "sh-h-h-not-for-the-handbook"
-    And the isaac config path "google.tonotop.oauth.client-secret" is "${GOOGLE_CLIENT_SECRET}"
+    And the isaac config path "google.marigold.oauth.client-secret" is "${GOOGLE_CLIENT_SECRET}"
     And the following model responses are queued:
       | type     | tool_call      | arguments                                             | content | model |
-      | toolCall | handbook__read | {"topics":["config:google.tonotop.oauth.client-secret"]} |      | echo  |
+      | toolCall | handbook__read | {"topics":["config:google.marigold.oauth.client-secret"]} |      | echo  |
       | text     |                |                                                        | There.  | echo  |
     When isaac is run with "prompt -m 'Is the Google secret set?' --session bistro-chat --crew cordelia"
     Then session "bistro-chat" has transcript matching:
       | type    | message.role | message.content                                    |
       | message | assistant    | #"(?s)handbook__read"                              |
-      | message | toolResult   | #"(?s)config:google\.tonotop\.oauth\.client-secret" |
+      | message | toolResult   | #"(?s)config:google\.marigold\.oauth\.client-secret" |
       | message | toolResult   | #"(?s)set"                                          |
       | message | assistant    | There.                                              |
     And session "bistro-chat" has transcript not matching:
