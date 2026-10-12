@@ -1,9 +1,15 @@
 {:id          :isaac.handbook
- :version     "0.2.0"
+ :version     "0.3.0"
  :builtin?    true
  :factory     isaac.handbook.module/create-module
  :description "Isaac's operating handbook (POH) — tools for a crew to read how this instance of Isaac operates, drawn from every installed module's own handbook chapter."
  :handbook    "isaac/handbook/handbook.md"
+
+ :isaac/cli
+ {:handbook {:usage "handbook [<module-id>[#<slug>] ...]"
+             :summary "Read the operating handbook's table of contents or topics"
+             :namespace isaac.handbook.cli
+             :hosted true}}
 
  :isaac.agent/tools
  {:handbook__read      {:factory isaac.handbook.tools/read-tool-factory}

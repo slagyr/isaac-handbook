@@ -43,7 +43,6 @@ Feature: isaac handbook — operator man pages for the POH (isaac-y2dn)
                  :marigold.bridge {:local/root "/tmp/modules/marigold.bridge"}}}
       """
 
-  @wip
   Scenario: no args prints the TOC of installed chapters; a module with no handbook is absent (isaac-y2dn)
     When isaac is run with "handbook"
     Then the stdout contains "marigold.charts"
@@ -52,7 +51,6 @@ Feature: isaac handbook — operator man pages for the POH (isaac-y2dn)
     And the stdout does not contain "marigold.bridge"
     And the exit code is 0
 
-  @wip
   Scenario: a module-id argument prints that chapter (isaac-y2dn)
     When isaac is run with "handbook marigold.charts"
     Then the stdout contains "# marigold.charts"
@@ -61,7 +59,6 @@ Feature: isaac handbook — operator man pages for the POH (isaac-y2dn)
     And the stdout does not contain "marigold.bridge"
     And the exit code is 0
 
-  @wip
   Scenario: a module#slug argument prints that section (isaac-y2dn)
     When isaac is run with "handbook marigold.charts#plotting-a-course"
     Then the stdout contains "marigold.charts#plotting-a-course"
@@ -70,7 +67,6 @@ Feature: isaac handbook — operator man pages for the POH (isaac-y2dn)
     And the stdout does not contain "Reading the sensors"
     And the exit code is 0
 
-  @wip
   Scenario: several topic ids print in order; an unknown one is listed unknown, known ones still print, exit 1 (isaac-y2dn)
     When isaac is run with "handbook marigold.charts#reading-the-sensors space-whales marigold.charts#plotting-a-course"
     Then the stdout lines contain in order:
@@ -80,7 +76,6 @@ Feature: isaac handbook — operator man pages for the POH (isaac-y2dn)
     And the stdout contains "unknown"
     And the exit code is 1
 
-  @wip
   Scenario: a chapter larger than handbook.max-chars still prints in full (isaac-y2dn)
     Given the isaac config path "handbook.max-chars" is "60"
     When isaac is run with "handbook marigold.charts"

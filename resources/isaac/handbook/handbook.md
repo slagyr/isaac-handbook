@@ -12,6 +12,19 @@ chapter assumes. This chapter's own topic id is `isaac.handbook`; each `##`
 heading below is also addressable on its own, e.g.
 `isaac.handbook#reading-the-handbook`.
 
+## Reading the handbook from the CLI
+
+`isaac handbook` prints the table of contents of installed modules whose
+chapters resolve. `isaac handbook isaac.handbook` prints this whole chapter;
+`isaac handbook isaac.handbook#reading-the-handbook` prints one section.
+Supply several exact topic ids to print them in order. An unknown id is
+listed as unknown while known topics still print; the command exits 1 if
+any id is unknown. Output is Markdown on stdout with no pager and no
+`config:handbook.max-chars` cap (that cap applies only to the crew tool).
+`isaac help handbook` documents the command's syntax; help remains command
+usage rather than handbook prose. The hosted command also works through
+`skiff-isaac handbook`.
+
 ## Reading the handbook
 
 **What it is.** `handbook__read` returns the table of contents when called

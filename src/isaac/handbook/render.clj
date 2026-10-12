@@ -48,6 +48,12 @@
                         (map #(let [t (section-topic module-id %)] [(:id t) t]) sections))))
         entries))
 
+(defn known-topics
+  "Predicate for topic ids in these chapters; used by CLI for its exit status."
+  [chapters]
+  (let [by-id (topics-by-id (topic-entries chapters))]
+    #(contains? by-id %)))
+
 ;; endregion ^^^^^ Topic index ^^^^^
 
 ;; region ----- Size cap -----
